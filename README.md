@@ -1,6 +1,6 @@
 # MongoDB API for ABT Metadata
 
-This project implements a basic Node.js API for managing ABT metadata with MongoDB. It provides functionality to create and retrieve token metadata through RESTful endpoints.
+This project implements a basic Node.js API for managing ABT metadata with MongoDB. It provides functionality to create, retrieve, update and delete ABT metadata through RESTful endpoints.
 
 ## Prerequisites
 
@@ -32,14 +32,14 @@ npm install
 To start the server, run:
 
 ```bash
-node api-server.js
+npm run dev
 ```
 
 ## Usage
 
 ### Create ABT Metadata
 
-To add new token metadata, use the following query command:
+To add new ABT metadata, use the following query command:
 
 ```bash
 curl -X POST http://localhost:3000/api/token \
@@ -51,7 +51,7 @@ curl -X POST http://localhost:3000/api/token \
     "description": "This is an example token.",
     "contractRedemptionVoucher": {
         "fileName": "Document",
-        "fileUrl": "http://example.com/document.pdf"
+        "fileURL": "http://example.com/document.pdf"
     },
     "thumbnail": "http://example.com/image.jpg",
     "externalURL": "http://example.com",
@@ -65,13 +65,40 @@ Example Response:
 
 Note:
 
-Token ID = "_id"
+TokenID = "_id"
 
-### Retrieve Token Metadata
+### Retrieve ABT Metadata
 
-To retrieve token metadata by ID, use the following curl command:
+To retrieve ABT metadata by ID, use the following curl command:
 
 ```bash
 curl -X GET http://localhost:3000/api/token/<TokenID>
 ```
-Replace <TokenID> with the actual ID of the token you wish to retrieve.
+
+*Replace <TokenID> with the actual ID of the ABT you wish to retrieve.*
+
+### Update ABT Metadata
+
+To update ABT metadata by ID, use the following curl command:
+
+```bash
+curl -X PUT http://localhost:3000/api/token/<TokenID> \
+-H "Content-Type: application/json" \
+-d '{
+    "name": "Updated ABT Name",
+    "description": "Updated description here.",
+    "thumbnail": "http://example.com/updated_thumbnail.jpg"
+}'
+```
+
+*Replace <TokenID> with the actual ID of the ABT you wish to update.*
+
+### Delete ABT Metadata
+
+To delete ABT metadata by ID, use the following curl command:
+
+```bash
+curl -X DELETE http://localhost:3000/api/token/<TokenID>
+```
+
+*Replace <TokenID> with the actual ID of the ABT you wish to delete.*

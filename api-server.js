@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -5,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // Free MongoDB for testing
-const mongoURI = 'mongodb+srv://j3robinson1:2Iyts8t22%40@abt-cluster.1bwefte.mongodb.net/?retryWrites=true&w=majority&appName=ABT-Cluster';
+const mongoURI = process.env.MONGO_URI;
 
 mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
@@ -58,10 +59,33 @@ app.get('/api/token/:tokenId', async (req, res) => {
     }
 });  
 
+app.put('/api/token/:tokenId', async (req, res) => {
+    try {
+        const updates = req.body;
+        const options = { new: true };
+        const result = await Token.findByIdAndUpdate(req.params.tokenId, updates, options);
+        if (!result) {
+            return res.status(404).send('Token not found');
+        }
+        res.send(result);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+app.delete('/api/token/:tokenId', async (req, res) => {
+    try {
+        const result = await Token.findByIdAndDelete(req.params.tokenId);
+        if (!result) {
+            return res.status(404).send('Token not found');
+        }
+        res.send({ message: 'Token deleted successfully' });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
-// Discord Webhook Test
