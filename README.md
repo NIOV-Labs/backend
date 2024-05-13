@@ -45,6 +45,30 @@ npm run dev
 
 ## Usage
 
+### Upload PDF
+
+To upload pdf refer to the test/upload.js file:
+
+```bash
+npm run test
+```
+
+Via Curl:
+
+```bash
+head -c 1024 test/test.pdf | base64 > chunk.txt 
+curl -X POST http://localhost:3000/upload \
+-H "Content-Type: application/json" \
+-d @- <<EOF
+{
+  "ext": "pdf",
+  "chunk": "data:application/pdf;base64,$(cat chunk.txt)",
+  "chunkIndex": 0,
+  "totalChunks": 1
+}
+EOF
+```
+
 ### Create ABT Metadata
 
 To add new ABT metadata, use the following query command:
