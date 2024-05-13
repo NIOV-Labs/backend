@@ -33,7 +33,7 @@ npm install
 nano .env
 ```
 
-MONGO_URI=<Ask Jesse or make your own @ https://www.mongodb.com/products/platform/atlas-database>
+MONGO_URI=<Ask Jesse or make your own @ [MongoDB](https://www.mongodb.com/products/platform/atlas-database)>
 
 ### Run Server
 
@@ -69,7 +69,24 @@ curl -X POST http://localhost:3000/api/token \
 
 Example Response:
 
-{"name":"Example Token","symbol":"EXT","baseURI":"http://example.com/token","description":"This is a description of my token.","contractRedemptionVoucher":{"fileName":"Document","fileUrl":"http://example.com/document.pdf"},"thumbnail":"http://example.com/thumbnail.jpg","externalURL":"http://example.com","assetURL":"http://example.com/asset.jpg","_id":"66419766c9797b8a7e0b2a7e","__v":0}%  
+```json
+{
+    "name":"Example Token",
+    "symbol":"EXT",
+    "baseURI":"http://example.com/token",
+    "description":"This is a description of my token.",
+    "contractRedemptionVoucher":
+        {
+            "fileName":"Document",
+            "fileUrl":"http://example.com/document.pdf"
+        },
+    "thumbnail":"http://example.com/thumbnail.jpg",
+    "externalURL":"http://example.com",
+    "assetURL":"http://example.com/asset.jpg",
+    "_id":"66419766c9797b8a7e0b2a7e",
+    "__v":0
+}
+```
 
 Note:
 
