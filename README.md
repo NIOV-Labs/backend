@@ -50,8 +50,8 @@ curl -X POST http://localhost:3000/api/token \
     "baseURI": "http://example.com/token",
     "description": "This is an example token.",
     "contractRedemptionVoucher": {
-        "voucherId": "voucher123",
-        "validUntil": "2024-12-31T23:59:59Z"
+        "fileName": "Document",
+        "fileUrl": "http://example.com/document.pdf"
     },
     "thumbnail": "http://example.com/image.jpg",
     "externalURL": "http://example.com",
@@ -61,7 +61,9 @@ curl -X POST http://localhost:3000/api/token \
 
 Example Response:
 
-{"name":"MyNFT","symbol":"MNFT","baseURI":"http://example.com/nft","description":"This is a description of my NFT.","contractRedemptionVoucher":{"voucherId":"123456","validUntil":"2023-12-31T23:59:59.000Z"},"thumbnail":"http://example.com/nft/thumbnail.jpg","externalURL":"http://example.com","assetURL":"http://example.com/nft/asset.jpg","_id":"66419766c9797b8a7e0b2a7e","__v":0}%  
+{"name":"MyNFT","symbol":"MNFT","baseURI":"http://example.com/nft","description":"This is a description of my NFT.","contractRedemptionVoucher":{"fileName":"Document","fileUrl":"http://example.com/document.pdf"},"thumbnail":"http://example.com/nft/thumbnail.jpg","externalURL":"http://example.com","assetURL":"http://example.com/nft/asset.jpg","_id":"66419766c9797b8a7e0b2a7e","__v":0}%  
+
+Note:
 
 Token ID = "_id"
 
