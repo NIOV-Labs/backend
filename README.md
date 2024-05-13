@@ -1,6 +1,6 @@
 # MongoDB API for ABT Metadata
 
-This project implements a basic Node.js API for managing ERC-721 token metadata with MongoDB. It provides functionality to create and retrieve token metadata through RESTful endpoints.
+This project implements a basic Node.js API for managing ABT metadata with MongoDB. It provides functionality to create and retrieve token metadata through RESTful endpoints.
 
 ## Prerequisites
 
