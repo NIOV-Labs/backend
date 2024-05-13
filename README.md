@@ -1,4 +1,4 @@
-# MongoDB API for ERC-721 Tokens
+# MongoDB API for ABT Metadata
 
 This project implements a basic Node.js API for managing ERC-721 token metadata with MongoDB. It provides functionality to create and retrieve token metadata through RESTful endpoints.
 
@@ -15,7 +15,7 @@ Before you start, ensure you have the following installed on your system:
 Start by cloning this repository to your local machine:
 
 ```bash
-git clone https://your-repository-url.git
+git clone https://github.com/NIOV-Labs/mongodb-api.git
 cd mongodb-api
 ```
 
@@ -37,7 +37,7 @@ node api-server.js
 
 ## Usage
 
-### Create Token Metadata
+### Create ABT Metadata
 
 To add new token metadata, use the following query command:
 
@@ -61,7 +61,7 @@ curl -X POST http://localhost:3000/api/token \
 
 Example Response:
 
-{"name":"MyNFT","symbol":"MNFT","baseURI":"http://example.com/nft","description":"This is a description of my NFT.","contractRedemptionVoucher":{"fileName":"Document","fileUrl":"http://example.com/document.pdf"},"thumbnail":"http://example.com/nft/thumbnail.jpg","externalURL":"http://example.com","assetURL":"http://example.com/nft/asset.jpg","_id":"66419766c9797b8a7e0b2a7e","__v":0}%  
+{"name":"Example Token","symbol":"EXT","baseURI":"http://example.com/token","description":"This is a description of my token.","contractRedemptionVoucher":{"fileName":"Document","fileUrl":"http://example.com/document.pdf"},"thumbnail":"http://example.com/thumbnail.jpg","externalURL":"http://example.com","assetURL":"http://example.com/asset.jpg","_id":"66419766c9797b8a7e0b2a7e","__v":0}%  
 
 Note:
 
