@@ -27,6 +27,14 @@ Run the following command in your project directory to install the necessary pac
 npm install
 ```
 
+### Add Environment Variables
+
+```bash
+nano .env
+```
+
+MONGO_URI=<Ask Jesse or make your own @ https://www.mongodb.com/products/platform/atlas-database>
+
 ### Run Server
 
 To start the server, run:
