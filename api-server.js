@@ -17,8 +17,8 @@ const TokenSchema = new mongoose.Schema({
     baseURI: { type: String, required: true },
     description: { type: String, required: true },
     contractRedemptionVoucher: {
-      voucherId: String,
-      validUntil: Date,
+      fileName: String,
+      fileURL: String,
     },
     thumbnail: { type: String },
     externalURL: { type: String },
