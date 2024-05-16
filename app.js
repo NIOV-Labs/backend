@@ -1,13 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const upload = multer();
+const fs = require('fs');
+const md5 = require('md5');
+
 const app = express();
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-app.use(express.json());
-
-// Free MongoDB for testing
 const mongoURI = process.env.MONGO_URI;
-
 mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
@@ -57,17 +60,17 @@ app.get('/api/token/:tokenId', async (req, res) => {
     } catch (error) {
       res.status(500).send(error);
     }
-});  
+});
 
 app.put('/api/token/:tokenId', async (req, res) => {
     try {
         const updates = req.body;
         const options = { new: true };
-        const result = await Token.findByIdAndUpdate(req.params.tokenId, updates, options);
-        if (!result) {
+        const token = await Token.findByIdAndUpdate(req.params.tokenId, updates, options);
+        if (!token) {
             return res.status(404).send('Token not found');
         }
-        res.send(result);
+        res.send(token);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -75,8 +78,8 @@ app.put('/api/token/:tokenId', async (req, res) => {
 
 app.delete('/api/token/:tokenId', async (req, res) => {
     try {
-        const result = await Token.findByIdAndDelete(req.params.tokenId);
-        if (!result) {
+        const token = await Token.findByIdAndDelete(req.params.tokenId);
+        if (!token) {
             return res.status(404).send('Token not found');
         }
         res.send({ message: 'Token deleted successfully' });
@@ -85,7 +88,66 @@ app.delete('/api/token/:tokenId', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.post('/upload', upload.none(), (req, res) => {
+    const { ext, chunk, chunkIndex, totalChunks } = req.body;
+    const dataChunk = decomposeFile(chunk, chunkIndex, totalChunks);
+
+    const nameFor = uploadLabels(ext, req.ip, totalChunks);
+    const pathTo = uploadPaths(nameFor);
+
+    const shouldDelete = dataChunk.isFirst && fs.existsSync(pathTo.tmp);
+    if (shouldDelete) fs.unlinkSync(pathTo.tmp);
+
+    fs.appendFileSync(pathTo.tmp, dataChunk.contents);
+
+    if (dataChunk.isLast) {
+        fs.renameSync(pathTo.tmp, pathTo.prev);
+        res.json({ finalName: nameFor.prev });
+    } else {
+        res.json({ tmpName: nameFor.tmp });
+    }
 });
+
+function uploadLabels(ext, totalChunks) {
+  const baseString = `${Date.now()}-${totalChunks}`;
+  const hash = md5(baseString);
+  const tempFileName = `tmp_${hash}.${ext}`;
+  const finalFileName = `${hash}.${ext}`;
+
+  return {
+      tmp: tempFileName,
+      prev: finalFileName
+  };
+}
+
+function uploadPaths(labels) {
+  return {
+      tmp: `./uploads/${labels.tmp}`,
+      prev: `./uploads/${labels.prev}`
+  };
+}
+
+function decomposeFile(chunk, chunkIndex, totalChunks) {
+  const chunkIdx = parseInt(chunkIndex, 10);
+  const chunkNum = chunkIdx + 1;
+  const chunkTotal = parseInt(totalChunks, 10);
+  const percentProgress = (chunkNum / chunkTotal) * 100;
+  const isFirstChunk = chunkIdx === 0;
+  const isLastChunk = chunkIdx === (chunkTotal - 1);
+
+  const chunkData = chunk.split(',')[1];
+  const chunkBuffer = Buffer.from(chunkData, 'base64');
+
+  return {
+      idx: chunkIdx,
+      num: chunkNum,
+      tot: chunkTotal,
+      isFirst: isFirstChunk,
+      isLast: isLastChunk,
+      percent: percentProgress,
+      contents: chunkBuffer
+  };
+}
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
