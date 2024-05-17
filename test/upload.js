@@ -6,6 +6,7 @@ const filePath = path.join(__dirname, 'test.pdf');
 const fileSize = fs.statSync(filePath).size;
 const chunkSize = 1024 * 1024;
 const totalChunks = Math.ceil(fileSize / chunkSize);
+console.log('Testing Upload...');
 
 fs.readFile(filePath, async (err, data) => {
     if (err) return console.error(err);
@@ -21,6 +22,7 @@ fs.readFile(filePath, async (err, data) => {
                 chunkIndex: i,
                 totalChunks: totalChunks
             });
+            console.log(`Status: ${response.status}`);
             console.log(`Chunk ${i + 1}/${totalChunks}:`, response.data);
         } catch (error) {
             console.error(`Failed to upload chunk ${i + 1}:`, error.response?.data || error.message);
