@@ -33,7 +33,10 @@ npm install
 nano .env
 ```
 
+```bash
 MONGO_URI=<Ask Jesse or make your own @ [MongoDB](https://www.mongodb.com/products/platform/atlas-database)>
+JWT_SECRET='hniTm,?0{p9|?3£g;y?Z£xRNv|J\nS(P'
+```
 
 ### Run Server
 
@@ -45,12 +48,20 @@ npm run dev
 
 ## Usage
 
+### Web3 Auth Service
+
+To auth and create a session use the following command::
+
+```bash
+npm run test:login
+```
+
 ### Upload PDF
 
 To upload pdf refer to the test/upload.js file:
 
 ```bash
-npm run test
+npm run test:upload
 ```
 
 Via Curl:

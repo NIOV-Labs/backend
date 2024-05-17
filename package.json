@@ -4,7 +4,9 @@
 	"description": "This project implements a basic Node.js API for managing ABT metadata with MongoDB. It provides functionality to create, retrieve, update and delete ABT metadata through RESTful endpoints.",
 	"main": "app.js",
 	"scripts": {
-		"test": "node test/upload.js",
+        "test": "node test/auth.js && node test/upload.js",
+        "test:login": "node test/auth.js",
+		"test:upload": "node test/upload.js",
 		"start": "node app.js",
 		"dev": "nodemon app.js"
 	},
@@ -14,7 +16,9 @@
 	"dependencies": {
 		"axios": "^1.6.8",
 		"dotenv": "^16.4.5",
+		"ethers": "^6.12.1",
 		"express": "^4.19.2",
+		"jsonwebtoken": "^9.0.2",
 		"md5": "^2.3.0",
 		"mongoose": "^8.3.4",
 		"multer": "^1.4.5-lts.1"
