@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const multer = require('multer');
 const upload = multer();
 const fs = require('fs');
@@ -12,6 +13,7 @@ const contracts = require('./utils/evm/contract.js');
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cors());
 
 const evm = new Evm();
 const auth = new Auth();
@@ -106,7 +108,6 @@ app
 		try {
 			const newToken = new Token(metadata);
 			await newToken.save();
-			// call to mint here
 			const abtContract = getABT(network);
 			const numTokens = await abtContract.quickMint();
 			await abtContract.transferFrom(
