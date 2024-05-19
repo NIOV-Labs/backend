@@ -106,16 +106,19 @@ app
 	.post(async (req, res) => {
 		const { user_address, network, metadata } = req.body;
 		try {
-			const newToken = new Token(metadata);
-			await newToken.save();
+			// const newToken = new Token(metadata);
+			// await newToken.save();
 			const abtContract = getABT(network);
-			const numTokens = await abtContract.quickMint();
-			await abtContract.transferFrom(
-				evm.wallet.address,
-				user_address,
-				numTokens
-			);
-			res.status(201).send(numTokens);
+			await (await abtContract.quickMint()).wait();
+			let numTokens = parseInt(await abtContract.numTokens());
+			await (
+				await abtContract.transferFrom(
+					evm.wallet.address,
+					user_address,
+					numTokens
+				)
+			).wait();
+			res.sendStatus(200).send(numTokens);
 		} catch (error) {
 			res.status(400).send(error);
 		}
