@@ -11,17 +11,7 @@ require('./lib/routes.js').addRoutes(app, evm);
 // const md5 = require('md5');
 
 // const Auth = require('./utils/auth');
-// const contracts = require('./utils/evm/contract.js');
-
 // const auth = new Auth();
-
-// function getABT(chainId) {
-// 	return contracts.retrieve(
-// 		'AssetBoundToken',
-// 		chainId,
-// 		evm.network.signer(chainId)
-// 	);
-// }
 
 // app
 // 	.route('/api/login')
