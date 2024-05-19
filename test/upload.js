@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
 
-const filePath = path.join(__dirname, 'test.pdf');
+const filePath = path.join(__dirname, 'test-1.pdf');
 const chunkSize = 1024 * 1024; // 1 MB
 const serverUrl = 'http://localhost:3000/api/upload';
 
@@ -11,6 +11,7 @@ async function uploadFile() {
         const data = fs.readFileSync(filePath);
         const fileSize = data.length;
         const totalChunks = Math.ceil(fileSize / chunkSize);
+        const baseName = `tmp_${Date.now()}_${path.basename(filePath)}`;
 
         console.log('Testing Upload...');
 
@@ -22,7 +23,8 @@ async function uploadFile() {
                 ext: 'pdf',
                 chunk: `data:application/pdf;base64,${base64Data}`,
                 chunkIndex: i,
-                totalChunks: totalChunks
+                totalChunks: totalChunks,
+                baseName: baseName
             };
 
             try {
