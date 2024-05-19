@@ -85,47 +85,28 @@ EOF
 To add new ABT metadata, use the following query command:
 
 ```bash
-curl -X POST http://localhost:3000/api/token \
--H "Content-Type: application/json" \
--d '{
-    "name": "Example Token",
-    "symbol": "EXT",
-    "baseURI": "http://example.com/token",
-    "description": "This is an example token.",
-    "contractRedemptionVoucher": {
-        "fileName": "Document",
-        "fileURL": "http://example.com/document.pdf"
-    },
-    "thumbnail": "http://example.com/image.jpg",
-    "externalURL": "http://example.com",
-    "assetURL": "http://example.com/asset.jpg"
-}'
+curl -X POST http://localhost:3000/api/token/9912349 \
+     -H "Content-Type: application/json" \
+     -d '{
+           "user_address": "0x1234567890abcdef1234567890abcdef12345678",
+           "network": "sepolia",
+           "metadata": {
+               "name": "Test Token",
+               "description": "This is a test token",
+               "externalURL": "https://example.com",
+               "image": "https://example.com/image.png",
+               "document": "https://example.com/document.pdf"
+           }
+         }'
 ```
 
 Example Response:
 
 ```json
 {
-    "name":"Example Token",
-    "symbol":"EXT",
-    "baseURI":"http://example.com/token",
-    "description":"This is a description of my token.",
-    "contractRedemptionVoucher":
-        {
-            "fileName":"Document",
-            "fileUrl":"http://example.com/document.pdf"
-        },
-    "thumbnail":"http://example.com/thumbnail.jpg",
-    "externalURL":"http://example.com",
-    "assetURL":"http://example.com/asset.jpg",
-    "_id":"66419766c9797b8a7e0b2a7e",
-    "__v":0
+    "tokenId": "2395871029845719" 
 }
 ```
-
-Note:
-
-TokenID = "_id"
 
 ### Retrieve ABT Metadata
 
