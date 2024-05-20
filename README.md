@@ -48,7 +48,7 @@ npm run dev
 
 ## Usage
 
-#### Quicklinks
+#### Index
 
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px;">
 
@@ -90,11 +90,7 @@ EOF
 
 ### Delete PDF
 
-To upload pdf refer to the test/upload.js file:
-
-```bash
-npm run test:upload
-```
+To delete a pdf use the following curl:
 
 Via Curl:
 
