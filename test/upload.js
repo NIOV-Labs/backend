@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
 
-const filePath = path.join(__dirname, 'test-1.pdf');
+const filePath = path.join(__dirname, 'test.pdf');
 const chunkSize = 1024 * 1024; // 1 MB
 const serverUrl = 'http://localhost:3000/api/upload';
 

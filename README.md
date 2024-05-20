@@ -48,7 +48,18 @@ npm run dev
 
 ## Usage
 
-### Web3 Auth Service
+#### Quicklinks
+
+[Web3 Auth](#web3-auth)
+[Upload PDF](#upload-pdf)
+[Delete PDF](#delete-pdf)
+[Create ABT](#create-abt)
+[Retrieve ABT](#retrieve-abt)
+[Update ABT](#update-abt)
+[Delete ABT](#delete-abt)
+[Delete all ABTs](#delete-all-abts)
+
+### Web3 Auth
 
 To auth and create a session use the following command::
 
@@ -80,7 +91,21 @@ curl -X POST http://localhost:3000/upload \
 EOF
 ```
 
-### Create ABT Metadata
+### Delete PDF
+
+To upload pdf refer to the test/upload.js file:
+
+```bash
+npm run test:upload
+```
+
+Via Curl:
+
+```bash
+curl -X DELETE -H "Content-Type: application/json" -d '{"fileName": "1716162989796_test-1.pdf"}' http://localhost:3000/api/upload
+```
+
+### Create ABT
 
 To add new ABT metadata, use the following query command:
 
@@ -108,7 +133,7 @@ Example Response:
 }
 ```
 
-### Retrieve ABT Metadata
+### Retrieve ABT
 
 To retrieve ABT metadata by ID, use the following curl command:
 
@@ -118,7 +143,7 @@ curl -X GET http://localhost:3000/api/token/<TokenID>
 
 *Replace <TokenID> with the actual ID of the ABT you wish to retrieve.*
 
-### Update ABT Metadata
+### Update ABT
 
 To update ABT metadata by ID, use the following curl command:
 
@@ -134,7 +159,7 @@ curl -X PUT http://localhost:3000/api/token/<TokenID> \
 
 *Replace <TokenID> with the actual ID of the ABT you wish to update.*
 
-### Delete ABT Metadata
+### Delete ABT
 
 To delete ABT metadata by ID, use the following curl command:
 
@@ -143,3 +168,12 @@ curl -X DELETE http://localhost:3000/api/token/<TokenID>
 ```
 
 *Replace <TokenID> with the actual ID of the ABT you wish to delete.*
+
+### Delete all ABTs
+
+To delete all ABT metadatas in mongodb and start fresh, use the following curl command:
+
+```bash
+curl -X DELETE http://localhost:3000/api/tokens
+```
+
