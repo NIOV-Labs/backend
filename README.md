@@ -48,7 +48,15 @@ npm run dev
 
 ## Usage
 
-### Web3 Auth Service
+#### Quicklinks
+
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px;">
+
+[Web3 Auth](#web3-auth) | [Upload PDF](#upload-pdf) | [Delete PDF](#delete-pdf) | [Create ABT](#create-abt) | [Retrieve ABT](#retrieve-abt) | [Update ABT](#update-abt) | [Delete ABT](#delete-abt) | [Delete all ABTs](#delete-all-abts)
+
+</div>
+
+### Web3 Auth
 
 To auth and create a session use the following command::
 
@@ -80,54 +88,49 @@ curl -X POST http://localhost:3000/upload \
 EOF
 ```
 
-### Create ABT Metadata
+### Delete PDF
+
+To upload pdf refer to the test/upload.js file:
+
+```bash
+npm run test:upload
+```
+
+Via Curl:
+
+```bash
+curl -X DELETE -H "Content-Type: application/json" -d '{"fileName": "1716162989796_test-1.pdf"}' http://localhost:3000/api/upload
+```
+
+### Create ABT
 
 To add new ABT metadata, use the following query command:
 
 ```bash
-curl -X POST http://localhost:3000/api/token \
--H "Content-Type: application/json" \
--d '{
-    "name": "Example Token",
-    "symbol": "EXT",
-    "baseURI": "http://example.com/token",
-    "description": "This is an example token.",
-    "contractRedemptionVoucher": {
-        "fileName": "Document",
-        "fileURL": "http://example.com/document.pdf"
-    },
-    "thumbnail": "http://example.com/image.jpg",
-    "externalURL": "http://example.com",
-    "assetURL": "http://example.com/asset.jpg"
-}'
+curl -X POST http://localhost:3000/api/token/9912349 \
+     -H "Content-Type: application/json" \
+     -d '{
+           "user_address": "0x1234567890abcdef1234567890abcdef12345678",
+           "network": "sepolia",
+           "metadata": {
+               "name": "Test Token",
+               "description": "This is a test token",
+               "externalURL": "https://example.com",
+               "image": "https://example.com/image.png",
+               "document": "https://example.com/document.pdf"
+           }
+         }'
 ```
 
 Example Response:
 
 ```json
 {
-    "name":"Example Token",
-    "symbol":"EXT",
-    "baseURI":"http://example.com/token",
-    "description":"This is a description of my token.",
-    "contractRedemptionVoucher":
-        {
-            "fileName":"Document",
-            "fileUrl":"http://example.com/document.pdf"
-        },
-    "thumbnail":"http://example.com/thumbnail.jpg",
-    "externalURL":"http://example.com",
-    "assetURL":"http://example.com/asset.jpg",
-    "_id":"66419766c9797b8a7e0b2a7e",
-    "__v":0
+    "tokenId": "2395871029845719" 
 }
 ```
 
-Note:
-
-TokenID = "_id"
-
-### Retrieve ABT Metadata
+### Retrieve ABT
 
 To retrieve ABT metadata by ID, use the following curl command:
 
@@ -137,7 +140,7 @@ curl -X GET http://localhost:3000/api/token/<TokenID>
 
 *Replace <TokenID> with the actual ID of the ABT you wish to retrieve.*
 
-### Update ABT Metadata
+### Update ABT
 
 To update ABT metadata by ID, use the following curl command:
 
@@ -153,7 +156,7 @@ curl -X PUT http://localhost:3000/api/token/<TokenID> \
 
 *Replace <TokenID> with the actual ID of the ABT you wish to update.*
 
-### Delete ABT Metadata
+### Delete ABT
 
 To delete ABT metadata by ID, use the following curl command:
 
@@ -162,3 +165,12 @@ curl -X DELETE http://localhost:3000/api/token/<TokenID>
 ```
 
 *Replace <TokenID> with the actual ID of the ABT you wish to delete.*
+
+### Delete all ABTs
+
+To delete all ABT metadatas in mongodb and start fresh, use the following curl command:
+
+```bash
+curl -X DELETE http://localhost:3000/api/tokens
+```
+
