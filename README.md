@@ -50,14 +50,11 @@ npm run dev
 
 #### Quicklinks
 
-[Web3 Auth](#web3-auth)
-[Upload PDF](#upload-pdf)
-[Delete PDF](#delete-pdf)
-[Create ABT](#create-abt)
-[Retrieve ABT](#retrieve-abt)
-[Update ABT](#update-abt)
-[Delete ABT](#delete-abt)
-[Delete all ABTs](#delete-all-abts)
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px;">
+
+[Web3 Auth](#web3-auth) | [Upload PDF](#upload-pdf) | [Delete PDF](#delete-pdf) | [Create ABT](#create-abt) | [Retrieve ABT](#retrieve-abt) | [Update ABT](#update-abt) | [Delete ABT](#delete-abt) | [Delete all ABTs](#delete-all-abts)
+
+</div>
 
 ### Web3 Auth
 
