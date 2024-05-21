@@ -7,6 +7,7 @@
 		"test": "node test/auth.js && node test/upload.js",
 		"test:login": "node test/auth.js",
 		"test:upload": "node test/upload.js",
+		"test:token": "node test/token.js",
 		"start": "node app.js",
 		"dev": "nodemon app.js"
 	},

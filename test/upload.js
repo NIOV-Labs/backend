@@ -29,7 +29,7 @@ async function uploadFile() {
 
             try {
                 console.log(`Uploading chunk ${i + 1} of ${totalChunks}`);
-                const response = await axios.post(serverUrl, payload, {
+                const response = await axios.post(serverUrl, JSON.stringify(payload), {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 console.log(`Status: ${response.status}`);
