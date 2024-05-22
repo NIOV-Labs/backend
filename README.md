@@ -152,7 +152,7 @@ curl -X PUT http://localhost:3000/api/token/<TokenID> \
 
 *Replace <TokenID> with the actual ID of the ABT you wish to update.*
 
-### Delete ABT
+<!-- ### Delete ABT
 
 To delete ABT metadata by ID, use the following curl command:
 
@@ -160,7 +160,7 @@ To delete ABT metadata by ID, use the following curl command:
 curl -X DELETE http://localhost:3000/api/token/<TokenID>
 ```
 
-*Replace <TokenID> with the actual ID of the ABT you wish to delete.*
+*Replace <TokenID> with the actual ID of the ABT you wish to delete.* -->
 
 ### Delete all ABTs
 
