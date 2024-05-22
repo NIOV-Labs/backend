@@ -107,7 +107,7 @@ curl -X POST http://localhost:3000/api/token/1 \
      -H "Content-Type: application/json" \
      -d '{
            "user_address": "0x1234567890abcdef1234567890abcdef12345678",
-           "network": "sepolia",
+           "network": 31337,
            "metadata": {
                "name": "Test Token",
                "description": "This is a test token",
