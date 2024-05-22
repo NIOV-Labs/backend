@@ -1,12 +1,11 @@
 const axios = require('axios');
 
-const serverUrl = 'http://localhost:3000/api/token';
-const metadataUrl = 'http://localhost:3000/api/tokens/metadata';
+const TokenAPI = 'http://localhost:3000/api/token';
+const TokensAPI = 'http://localhost:3000/api/tokens';
 
-// Test data
 const testData = {
     user_address: '0x1234567890abcdef1234567890abcdef12345678',
-    network: 'localhost',
+    network: 31337,
     metadata: {
         name: 'Test Token',
         description: 'This is a test token',
@@ -16,40 +15,29 @@ const testData = {
     }
 };
 
-// Function to test POST, GET, PUT, DELETE, and the new metadata route
 async function testTokenRoutes() {
     try {
-        // POST request to create a new token
         console.log('Testing POST /api/token');
-        const postResponse = await axios.post(`${serverUrl}/1`, testData);
+        const postResponse = await axios.post(`${TokenAPI}/1`, testData);
         console.log('POST Response:', postResponse.data);
 
         const tokenId = postResponse.data.tokenId;
 
-        // GET request to retrieve the created token
         console.log(`Testing GET /api/token/${tokenId}`);
-        const getResponse = await axios.get(`${serverUrl}/${tokenId}`);
+        const getResponse = await axios.get(`${TokenAPI}/${tokenId}`);
         console.log('GET Response:', getResponse.data);
 
-        // PUT request to update the created token
         console.log(`Testing PUT /api/token/${tokenId}`);
         const updateData = { name: 'Updated Test Token', description: 'Updated description' };
-        const putResponse = await axios.put(`${serverUrl}/${tokenId}`, updateData);
+        const putResponse = await axios.put(`${TokenAPI}/${tokenId}`, updateData);
         console.log('PUT Response:', putResponse.data);
 
-        // Test the new metadata route with an array of token IDs
-        console.log('Testing POST /api/tokens');
-        const metadataResponse = await axios.post(metadataUrl, { tokenIds: [tokenId] });
-        console.log('METADATA Response:', metadataResponse.data);
+        console.log('Testing GET /api/tokens');
+        const metadataResponse = await axios.get(TokensAPI, { params: { tokenIds: [tokenId] } });
+        console.log('GET Tokens Response:', metadataResponse.data);
 
-        // DELETE request to delete the created token
-        console.log(`Testing DELETE /api/token/${tokenId}`);
-        const deleteResponse = await axios.delete(`${serverUrl}/${tokenId}`);
-        console.log('DELETE Response:', deleteResponse.data);
-
-        // DELETE request to delete all tokens
         console.log('Testing DELETE /api/tokens');
-        const deleteAllResponse = await axios.delete(`${serverUrl}s`);
+        const deleteAllResponse = await axios.delete(`${TokenAPI}s`);
         console.log('DELETE ALL Response:', deleteAllResponse.data);
 
     } catch (error) {
