@@ -103,7 +103,7 @@ curl -X DELETE -H "Content-Type: application/json" -d '{"fileName": "17161629897
 To add new ABT metadata, use the following query command:
 
 ```bash
-curl -X POST http://localhost:3000/api/token/9912349 \
+curl -X POST http://localhost:3000/api/token/1 \
      -H "Content-Type: application/json" \
      -d '{
            "user_address": "0x1234567890abcdef1234567890abcdef12345678",
@@ -122,7 +122,7 @@ Example Response:
 
 ```json
 {
-    "tokenId": "2395871029845719" 
+    "tokenId": "1" 
 }
 ```
 
