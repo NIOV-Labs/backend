@@ -395,7 +395,7 @@ axios.delete('http://localhost:3000/api/login', {
                     const structure = await response.json();
                     console.log('Structure:', structure);
                     const container = document.getElementById('uploads');
-                    container.innerHTML = '<a href="#" class="trash-bin" onclick="deleteAllStorage()">🗑️</a>';
+                    container.innerHTML = '<a href="#" class="trash-bin" onclick="deleteAllStorage()">MongoDB & Storage Reset 🗑️</a>';
                     container.innerHTML += renderDirectoryStructure(structure);
                 } else {
                     console.error('Failed to load uploads data');
