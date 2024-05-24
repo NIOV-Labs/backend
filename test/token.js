@@ -10,8 +10,12 @@ const testData = {
         name: 'Test Token',
         description: 'This is a test token',
         externalURL: 'https://example.com',
-        image: 'tmp_1716298773918_test.jpg',
-        document: 'tmp_1716298773918_test.pdf'
+        images: [
+            'tmp_1716298773918_test.jpg',
+            'tmp_1716298773920_test.png'
+        ],
+        document1: 'tmp_1716298773918_test1.pdf',
+        document2: 'tmp_1716298773919_test2.pdf'
     }
 };
 
