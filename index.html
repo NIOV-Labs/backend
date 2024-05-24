@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Routes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #8b46bc;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 15px 0;
+        }
+        a, .status-item a {
+            color: #8b46bc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover, .status-item a:hover {
+            color: #a253db;
+        }
+        .quicklinks {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .quicklinks a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: #8b46bc;
+            color: #121212;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .quicklinks a:hover {
+            background: #a253db;
+            color: #121212;
+        }
+        pre {
+            background-color: #1e1e1e;
+            border-color: #ffffff29 !important;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow-x: auto;
+            display: none;
+        }
+        .route-title, .method-title {
+            font-weight: bold;
+            color: #8b46bc;
+            transition: color 0.3s;
+        }
+        .route-title {
+            cursor: pointer;
+            margin: 10px 0;
+            border: 1px solid #8c38c769;
+            padding: 10px;
+        }
+        .route-title:hover {
+            color: #a253db;
+        }
+        .method-title {
+            margin-top: 10px;
+            color: #e8aaff;
+        }
+        .method-title, pre {
+            margin-left: 15px;
+            border-left: 10px solid #d8a3e757;
+            border-radius: 10px 0px 0px 10px;
+            padding-left: 10px;
+        }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        .status-item {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+        }
+        .contract-address, .block, .uploads li {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #8b46bc;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 10px solid #d8a3e757;
+            border-radius: 10px 0px 0px 10px;
+        }
+        .status-light {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        .block h3, .block p, .block li {
+            margin: 5px;
+        }
+        .uploads li li {
+            border-color: #ffffff45;
+        }
+        .contract-address p {
+            margin: 0;
+            padding: 5px;
+        }
+        .quicklinks .active {
+            background: #0000007a !important;
+            color: #8b46bc !important;
+            border: 2px solid #8b46bc;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="status-bar">
+            <div class="status-item" id="frontend-status">
+                <a href="http://localhost:5173/" target="_blank">
+                    <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none">
+                        <g id="Interface / External_Link">
+                            <path id="Vector" d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                    </svg>
+                </a>
+                Front End:
+                <span class="status-light" id="frontend-light"></span>
+            </div>
+            <div class="status-item" id="hardhat-status">
+                Hardhat Node:
+                <span class="status-light" id="hardhat-light"></span>
+            </div>
+        </div>
+        <div class="quicklinks">
+            <a href="/explorer" class="explorer" style="display:none;">Block Explorer</a>
+            <a href="/" class="explorer">Home</a>
+            <a href="/storage" class="storage">File Explorer</a>
+        </div>
+    
+        <div class="explorer" id="explorer">
+            <!-- Blockchain data will be dynamically inserted here -->
+        </div>
+        
+        <div class="uploads" id="uploads">
+            <!-- Blockchain data will be dynamically inserted here -->
+        </div>
+        
+        <h2 id="contracts-title" style="cursor: pointer; display: none;">Deployed Contracts +</h2>
+        <div class="contract-address" id="contract-address" style="display:none;">
+            <!-- Contract addresses will be dynamically inserted here -->
+        </div>
+
+        <h2>Routes</h2>
+        <ul>
+            <li class="route-title">/api/token/:tokenId</li>
+            <div class="method-title" style="display:none;">POST /api/token/1</div>
+            <pre><code class="language-js">
+axios.post('http://localhost:3000/api/token/1', {
+    user_address: '0x1234567890abcdef1234567890abcdef12345678',
+    network: 31337,
+    metadata: {
+    name: 'Test Token',
+    description: 'This is a test token',
+    externalURL: 'https://example.com',
+    image: 'https://example.com/image.png',
+    document: 'https://example.com/document.pdf'
+    }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <div class="method-title" style="display:none;">GET /api/token/&lt;TokenID&gt;</div>
+            <pre><code class="language-js">
+axios.get('http://localhost:3000/api/token/<TokenID>')
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <div class="method-title" style="display:none;">PUT /api/token/&lt;TokenID&gt;</div>
+            <pre><code class="language-js">
+axios.put('http://localhost:3000/api/token/<TokenID>', {
+    name: 'Updated ABT Name',
+    description: 'Updated description here.',
+    thumbnail: 'http://example.com/updated_thumbnail.jpg'
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <li class="route-title">/api/tokens</li>
+            <div class="method-title" style="display:none;">GET /api/tokens</div>
+            <pre><code class="language-js">
+axios.get('http://localhost:3000/api/tokens', {
+    params: {
+    tokenIds: [1, 2, 3]
+    }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <div class="method-title" style="display:none;">DELETE /api/tokens</div>
+            <pre><code class="language-js">
+axios.delete('http://localhost:3000/api/tokens')
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <li class="route-title">/api/upload</li>
+            <div class="method-title" style="display:none;">POST /api/upload</div>
+            <pre><code class="language-js">
+axios.post('http://localhost:3000/api/upload', {
+    ext: 'pdf',
+    chunk: 'data:application/pdf;base64,...',
+    chunkIndex: 0,
+    totalChunks: 1,
+    baseName: 'tmp_1234567890_test.pdf'
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <div class="method-title" style="display:none;">DELETE /api/upload</div>
+            <pre><code class="language-js">
+axios.delete('http://localhost:3000/api/upload', {
+    data: { fileName: 'tmp_1234567890_test.pdf' }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <li class="route-title">/api/login</li>
+            <div class="method-title" style="display:none;">POST /api/login</div>
+            <pre><code class="language-js">
+axios.post('http://localhost:3000/api/login', {
+    user: {
+    message: 'Login',
+    signature: '0x...',
+    address: '0x1234567890abcdef1234567890abcdef12345678'
+    }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+            <div class="method-title" style="display:none;">DELETE /api/login (logout)</div>
+            <pre><code class="language-js">
+axios.delete('http://localhost:3000/api/login', {
+    headers: {
+    Authorization: 'Bearer <your_refresh_token>'
+    }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+        </ul>
+    </div>
+
+    <script>
+        async function checkStatus(url, lightId) {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    document.getElementById(lightId).style.backgroundColor = '#00ff00'; // Green
+                    if (lightId === 'hardhat-light') {
+                        document.getElementById('contracts-title').style.display = 'block';
+                        document.querySelector('a.explorer').style.display = 'inline-block';
+                    }
+                } else {
+                    document.getElementById(lightId).style.backgroundColor = '#ff0000'; // Red
+                }
+            } catch (error) {
+                document.getElementById(lightId).style.backgroundColor = '#ff0000'; // Red
+            }
+        }
+
+        checkStatus('http://localhost:5173/', 'frontend-light');
+        checkStatus('http://localhost:8545/', 'hardhat-light');
+        
+        async function loadContracts() {
+            try {
+                const response = await fetch('/api/getContracts');
+                if (response.ok) {
+                    const contracts = await response.json();
+                    const container = document.getElementById('contract-address');
+                    Object.keys(contracts).forEach(key => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<strong>${key}:</strong> ${contracts[key]}`;
+                        container.appendChild(p);
+                    });
+                } else {
+                    console.error('Failed to load contracts');
+                }
+            } catch (error) {
+                console.error('Failed to load contracts', error);
+            }
+        }
+
+        loadContracts()
+
+        document.getElementById('contracts-title').addEventListener('click', function() {
+            const contractAddressDiv = document.getElementById('contract-address');
+            if (contractAddressDiv.style.display === 'none' || contractAddressDiv.style.display === '') {
+                contractAddressDiv.style.display = 'block';
+                this.textContent = 'Deployed Contracts -';
+            } else {
+                contractAddressDiv.style.display = 'none';
+                this.textContent = 'Deployed Contracts +';
+            }
+        });
+
+        document.querySelectorAll('.route-title').forEach(function(routeTitle) {
+            routeTitle.addEventListener('click', function() {
+                var nextElement = this.nextElementSibling;
+                while (nextElement && nextElement.tagName !== 'LI') {
+                    if (nextElement.style.display === 'none' || nextElement.style.display === '') {
+                        nextElement.style.display = 'block';
+                    } else {
+                        nextElement.style.display = 'none';
+                    }
+                    nextElement = nextElement.nextElementSibling;
+                }
+            });
+        });
+
+        async function loadExplorer() {
+            try {
+                const response = await fetch('/api/getBlocks');
+                if (response.ok) {
+                    const blocks = await response.json();
+                    const container = document.getElementById('explorer');
+                    blocks.forEach(block => {
+                        const blockDiv = document.createElement('div');
+                        blockDiv.classList.add('block');
+
+                        const blockContent = `
+                            <h3>Block Number: ${block.number}</h3>
+                            <p><strong>Hash:</strong> ${block.hash}</p>
+                            <p><strong>Timestamp:</strong> ${new Date(block.timestamp * 1000).toLocaleString()}</p>
+                            <p><strong>Miner:</strong> ${block.miner}</p>
+                            <p><strong>Parent Hash:</strong> ${block.parentHash}</p>
+                            <p><strong>State Root:</strong> ${block.stateRoot}</p>
+                            <p><strong>Transactions:</strong></p>
+                            <ul>
+                                ${block.transactions.map(tx => `<li>${tx}</li>`).join('')}
+                            </ul>
+                        `;
+                        blockDiv.innerHTML = blockContent;
+                        container.appendChild(blockDiv);
+                    });
+                } else {
+                    console.error('Failed to load block data');
+                }
+            } catch (error) {
+                console.error('Failed to load block data', error);
+            }
+        }
+
+        async function loadUploads() {
+            console.log('Loading uploads...');
+            try {
+                const response = await fetch('/api/getUploads');
+                if (response.ok) {
+                    const structure = await response.json();
+                    console.log('Structure:', structure);
+                    const container = document.getElementById('uploads');
+                    container.innerHTML = renderDirectoryStructure(structure);
+                } else {
+                    console.error('Failed to load uploads data');
+                }
+            } catch (error) {
+                console.error('Failed to load uploads data', error);
+            }
+        }
+
+        function renderDirectoryStructure(structure, parentPath = '') {
+            let html = '<ul>';
+            for (const item of structure) {
+                if (typeof item === 'object') {
+                    const folderName = Object.keys(item)[0];
+                    html += `
+                        <li>
+                            <span class="folder" onclick="this.nextElementSibling.classList.toggle('hidden')">${folderName}</span>
+                            <div class="hidden">
+                                ${renderDirectoryStructure(item[folderName], `${parentPath}/${folderName}`)}
+                            </div>
+                        </li>
+                    `;
+                } else {
+                    html += `
+                        <li>
+                            <a href="http://localhost:3000/uploads${parentPath}/${item}" target="_blank">${item}</a>
+                        </li>
+                    `;
+                }
+            }
+            html += '</ul>';
+            return html;
+        }
+
+        if (window.location.pathname === '/storage') {
+            loadUploads();
+            document.querySelector('.quicklinks a.storage').classList.add('active');
+        } else if (window.location.pathname === '/explorer') {
+            loadExplorer();
+            document.querySelector('.quicklinks a.explorer').classList.add('active');
+        }
+    </script>
+</body>
+</html>
