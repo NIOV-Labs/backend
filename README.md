@@ -7,9 +7,9 @@ This project implements a basic Node.js API for managing ABT metadata with Mongo
 Before you start, ensure you have the following installed on your system:
 
 - **Node.js and npm** (Node.js 18.x or later is recommended)
-- **Cairo Windows** (see instructions below)
+- **Cairo Windows** - Windows Only - (see instructions below)
 
-### Cairo Windows Setup
+### Cairo Windows Setup - Windows Only - 
 
 To use Cairo on Windows, download and install the release from [cairo-windows releases](https://github.com/preshing/cairo-windows/releases).
 
