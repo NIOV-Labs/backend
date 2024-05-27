@@ -28,8 +28,8 @@ or just edit the env variables if you don't want to keep doing this before nodem
 Start by cloning this repository to your local machine:
 
 ```bash
-git clone https://github.com/NIOV-Labs/mongodb-api.git
-cd mongodb-api
+git clone https://github.com/NIOV-Labs/backend.git
+cd backend
 ```
 
 ### Install Dependencies
