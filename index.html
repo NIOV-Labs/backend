@@ -296,6 +296,35 @@ axios.delete('http://localhost:3000/api/login', {
 .then(response => console.log(response.data))
 .catch(error => console.error(error));
             </code></pre>
+            <li class="route-title">/api/grossRevenue</li>
+            <div class="method-title" style="display:none;">GET /api/grossRevenue</div>
+            <pre><code class="language-js">
+axios.get('http://localhost:3000/api/grossRevenue', {
+    params: { wallet: '0x1234567890abcdef1234567890abcdef12345678' }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+
+            <!-- New route for getting sold ABTs -->
+            <li class="route-title">/api/soldABTs</li>
+            <div class="method-title" style="display:none;">GET /api/soldABTs</div>
+            <pre><code class="language-js">
+axios.get('http://localhost:3000/api/soldABTs', {
+    params: { wallet: '0x1234567890abcdef1234567890abcdef12345678' }
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
+
+            <!-- New route for deleting marketplace data -->
+            <li class="route-title">/api/marketplace</li>
+            <div class="method-title" style="display:none;">DELETE /api/marketplace</div>
+            <pre><code class="language-js">
+axios.delete('http://localhost:3000/api/marketplace')
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
+            </code></pre>
         </ul>
     </div>
 
