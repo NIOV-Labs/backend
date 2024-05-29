@@ -8,6 +8,7 @@
 		"test:login": "node test/auth.js",
 		"test:upload": "node test/upload.js",
 		"test:token": "node test/token.js",
+		"test:marketplace": "node test/marketplace.js",
 		"start": "node app.js",
 		"dev": "nodemon app.js",
 		"postinstall": "node scripts/install-poppler.js"

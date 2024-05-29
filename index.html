@@ -448,7 +448,10 @@ axios.delete('http://localhost:3000/api/login', {
                     const response = await fetch('/api/tokens', {
                         method: 'DELETE'
                     });
-                    if (response.ok) {
+                    const response2 = await fetch('/api/marketplace', {
+                        method: 'DELETE'
+                    });
+                    if (response.ok && response2.ok) {
                         alert('All storage and metadata deleted successfully.');
                         loadUploads(); // Reload the uploads after deletion
                     } else {
