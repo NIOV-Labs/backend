@@ -183,3 +183,21 @@ To delete all ABT metadatas in mongodb and start fresh, use the following curl c
 curl -X DELETE http://localhost:3000/api/tokens
 ```
 
+### Get Wallet Gross Revenue
+
+```bash
+curl -G http://localhost:3000/api/grossRevenue -d wallet=0x1234567890abcdef1234567890abcdef12345678
+```
+
+### Get Wallet Sold ABTs
+
+```bash
+curl -G http://localhost:3000/api/soldABTs -d wallet=0x1234567890abcdef1234567890abcdef12345678
+```
+
+### Delete MongoDB Marketplace Data
+
+```bash
+curl -X DELETE http://localhost:3000/api/marketplace -H "Content-Type: application/json"
+```
+
