@@ -201,3 +201,8 @@ curl -G http://localhost:3000/api/soldABTs -d wallet=0x1234567890abcdef123456789
 curl -X DELETE http://localhost:3000/api/marketplace -H "Content-Type: application/json"
 ```
 
+### Export MongoDB Marketplace Data
+
+```bash
+curl -G http://localhost:3000/api/exportMarketplaceData -d wallet=0x90F79bf6EB2c4f870365E785982E1f101E93b906
+```
