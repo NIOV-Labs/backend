@@ -78,11 +78,11 @@ class Network {
 			info = this.info(alias);
 			const wss = info.wss;
 			if (!wss) throw new Error('!wss');
-			console.log(`Creating provider for alias: ${alias} with socket: ${wss}`);
+			console.log(`Creating websocket for alias: ${alias} with socket: ${wss}`);
 			return new ethers.WebSocketProvider(wss);
 		} catch (err) {
 			throw new Error(
-				`Evm.Network.provider ${
+				`Evm.Network.websocket ${
 					info ? `- ${err.toString()}\n` : `\n${err.toString()}`
 				}`
 			);
