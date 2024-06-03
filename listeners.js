@@ -1,5 +1,5 @@
-const { ProceedsWithdrawn, ListingClosed } = require('../setup/mongoose');
-const contracts = require('../../utils/evm/contract');
+const { ProceedsWithdrawn, ListingClosed } = require('./lib/setup/mongoose');
+const contracts = require('./utils/evm/contract');
 
 async function getTimestamp(socket, event) {
 	try {
@@ -27,9 +27,9 @@ async function storeData(model, eName, data) {
 	}
 }
 
-const proceedsListener = async (contract, chainId, socket) => {
+const proceedsListener = (market, chainId, socket) => {
 	const eName = 'ProceedsWithdrawn';
-	contract.on(eName, async (usdPennyValue, rawValue, seller, event) => {
+	market.on(eName, async (usdPennyValue, rawValue, seller, event) => {
 		// console.log(event);
 		const { transactionHash } = event.log;
 		const timestamp = await getTimestamp(socket, event);
@@ -47,9 +47,9 @@ const proceedsListener = async (contract, chainId, socket) => {
 	});
 };
 
-const salesListener = async (contract, chainId, socket) => {
+const salesListener = (market, chainId, socket) => {
 	const eName = 'ListingClosed';
-	contract.on(
+	market.on(
 		eName,
 		async (
 			buyer,
@@ -83,37 +83,23 @@ const salesListener = async (contract, chainId, socket) => {
 	);
 };
 
-const reconnect = (evm) => {
-	console.log('Attempting to reconnect in 5 seconds...');
-	setTimeout(async () => {
-		console.log('Reconnecting...');
-		await setupListeners(evm);
-	}, 5000);
-};
-
-async function setupListeners(evm) {
+function setupListeners(evm) {
 	// use fs to read the deploymentMap dir and use that to figure out
 	// which chains have contracts deployed
 	const networks = [
 		// 31337, // localhost
 		11155111, // sepolia
-		80002, // amoy || could not coalesce error
-		2442, // cardona || could not coalesce error
+		// 80002, // amoy || could not coalesce error
+		// 2442, // cardona || could not coalesce error
 	];
 
-	let sockets = {};
-	networks.forEach(
-		(chainId) =>
-			(sockets[chainId] =
-				evm.network.websocket(chainId) || evm.network.provider(chainId))
-	);
-
-	for await (const chainId of networks) {
-		const socket = sockets[chainId];
+	networks.forEach((chainId) => {
+		const socket =
+			evm.network.websocket(chainId) || evm.network.provider(chainId);
 		const market = contracts.retrieve('NiovMarket', chainId, socket);
-		await proceedsListener(market, chainId, socket);
-		await salesListener(market, chainId, socket);
-	}
+		proceedsListener(market, chainId, socket);
+		salesListener(market, chainId, socket);
+	});
 }
 
 module.exports = { setupListeners };

@@ -3,6 +3,7 @@ const Evm = require('./utils/evm');
 const evm = new Evm();
 const app = require('./lib/setup/index.js').initApp();
 require('./lib/routes.js').addRoutes(app, evm);
+require('./listeners.js').setupListeners(evm);
 
 // const fs = require('fs');
 
