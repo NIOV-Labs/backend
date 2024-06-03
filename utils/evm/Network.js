@@ -52,40 +52,33 @@ class Network {
 		try {
 			info = this.info(alias);
 			const rpc = info.rpc;
-			if (!rpc) throw new Error('!rpc');
+			if (!rpc) throw new Error('missing');
 			console.log(`Creating provider for alias: ${alias} with RPC: ${rpc}`);
 			return new ethers.JsonRpcProvider(rpc);
 		} catch (err) {
-			throw new Error(
-				`Evm.Network.provider ${
-					info ? `- ${err.toString()}\n` : `\n${err.toString()}`
-				}`
-			);
+			if (err !== 'missing')
+				console.error(`Evm.Network.provider: missing url for ${alias}`);
+			else throw err;
 		}
 	}
 
 	signer(alias) {
-		try {
-			console.log(`Creating signer for alias: ${alias}`);
-			return new ethers.Wallet(this.wallet.key, this.provider(alias));
-		} catch (err) {
-			throw new Error(`Evm.Network.signer\n${err.toString()}`);
-		}
+		console.log(`Creating signer for alias: ${alias}`);
+		return new ethers.Wallet(this.wallet.key, this.provider(alias));
 	}
 
 	websocket(alias) {
+		let info;
 		try {
 			info = this.info(alias);
 			const wss = info.wss;
-			if (!wss) throw new Error('!wss');
+			if (!wss) throw new Error('missing');
 			console.log(`Creating websocket for alias: ${alias} with socket: ${wss}`);
 			return new ethers.WebSocketProvider(wss);
 		} catch (err) {
-			throw new Error(
-				`Evm.Network.websocket ${
-					info ? `- ${err.toString()}\n` : `\n${err.toString()}`
-				}`
-			);
+			if (err !== 'missing')
+				console.error(`Evm.Network.websocket: missing url for ${alias}`);
+			else throw err;
 		}
 	}
 
