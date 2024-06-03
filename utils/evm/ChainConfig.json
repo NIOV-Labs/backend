@@ -112,6 +112,7 @@
 		},
 		"testnet": true,
 		"rpc": "https://rpc.cardona.zkevm-rpc.com/",
+		"wss": "wss://rpc.cardona.zkevm-rpc.com/",
 		"explorer": {
 			"name": "PolygonScan",
 			"url": "https://cardona-zkevm.polygonscan.com/",

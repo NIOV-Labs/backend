@@ -132,8 +132,9 @@ function setupListeners(evm) {
 	const networks = [
 		// 31337, // localhost
 		11155111, // sepolia
-		80002, // amoy || could not coalesce error
-		// 2442, // cardona || could not coalesce error
+		80002, // amoy
+		// 2442, // cardona // NEEDS AN ACTUAL WSS PROVIDER
+		// SEE `./utils/evm/ChainConfig.json` @ `polygonZkEVMTestnet`
 	];
 
 	networks.forEach((chainId) => startListeners(evm, chainId));
