@@ -58,7 +58,7 @@ class Network {
 		} catch (err) {
 			if (err !== 'missing')
 				console.error(`Evm.Network.provider: missing url for ${alias}`);
-			else throw err;
+			throw err;
 		}
 	}
 
@@ -78,7 +78,7 @@ class Network {
 		} catch (err) {
 			if (err !== 'missing')
 				console.error(`Evm.Network.websocket: missing url for ${alias}`);
-			else throw err;
+			throw err;
 		}
 	}
 
