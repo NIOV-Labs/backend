@@ -7,3 +7,5 @@ package-lock.json
 uploads/*
 
 utils/interfaces/NiovMarket.json
+
+sandbox.js
